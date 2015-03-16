@@ -1,93 +1,95 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import Qt5Mozilla 1.0
+import Test 1.0
 
 ApplicationWindow {
-  id: window
+    cover: null
 
-  allowedOrientations: Orientation.Landscape | Orientation.Portrait | Orientation.LandscapeInverted
-  _defaultPageOrientations: allowedOrientations
-  initialPage: Page {
-    id: mainScope
-    objectName: "mainScope"
+    onWindowChanged: webView.chromeWindow = window
 
-    property alias webview: webViewport
 
-    signal pageTitleChanged(string title)
-    signal newWindow(string url)
+    initialPage: Page {
+        id: chrome
 
-    Rectangle {
-        id: navigationBar
-        color: "#efefef"
-        height: 38
-        z: webViewport.z + 1
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
+        property bool popupActive
+
+        Component.onCompleted: console.log("-------------- ", webView.contentItem, "-- " , webView.contentItem.verticalScrollDecorator)
+
+        Rectangle {
+            id: verticalScrollDecorator
+
+            width: 5
+            height: webView.contentItem ? webView.contentItem.verticalScrollDecorator.size : 0
+            y: webView.contentItem ? webView.contentItem.verticalScrollDecorator.position : 0
+            x: parent.width - width
+
+            color: "black"
+            smooth: true
+            radius: 2.5
+            visible: opacity > 0.0
+            opacity: webView.contentItem && webView.contentItem.verticalScrollDecorator.moving ? 1.0 : 0.0
+            Behavior on opacity { NumberAnimation { properties: "opacity"; duration: 400 } }
         }
 
         Rectangle {
-            color: "white"
-            height: 26
-            border.width: 1
-            border.color: "#bfbfbf"
-            radius: 3
-            anchors {
-                left: parent.left
-                right: parent.right
-                margins: 6
-                verticalCenter: parent.verticalCenter
-            }
-            TextInput {
-                id: addressLine
-                clip: true
-                selectByMouse: true
-                horizontalAlignment: TextInput.AlignLeft
-                font {
-                    pointSize: 11
-                    family: "Sans"
-                }
-                anchors {
-                    verticalCenter: parent.verticalCenter
-                    left: parent.left
-                    right: parent.right
-                    margins: 6
-                }
-                Keys.onReturnPressed:{
-                    webViewport.load(addressLine.text)
-                }
-            }
-        }
-    }
+            id: horizontalScrollDecorator
 
-    QmlMozView {
-        id: webViewport
-        objectName: "webViewport"
-        clip: false
-        visible: true
-        focus: true
-        active: true
-
-        anchors {
-            top: navigationBar.bottom
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
+            width: webView.contentItem ? webView.contentItem.horizontalScrollDecorator.size : 0
+            height: 5
+            x: webView.contentItem ? webView.contentItem.horizontalScrollDecorator.position : 0
+            y: parent.height - height - 100
+            color: "black"
+            smooth: true
+            radius: 2.5
+            visible: opacity > 0.0
+            opacity: webView.contentItem && webView.contentItem.horizontalScrollDecorator.moving ? 1.0 : 0.0
+            Behavior on opacity { NumberAnimation { properties: "opacity"; duration: 400 } }
         }
-        Connections {
-            target: webViewport
-            onViewInitialized: {
-                print("QmlMozView Initialized");
-                if (startURL.length != 0 && createParentID == 0) {
-                    webViewport.load(startURL)
-                }
-                else if (createParentID == 0) {
-                    webViewport.load("about:blank")
-                }
+
+        Rectangle {
+            anchors.bottom: parent.bottom
+            width: parent.width
+            height: 100
+            color: Theme.highlightDimmerColor
+            opacity: 0.7
+
+            Label {
+                anchors.centerIn: parent
+                text: "Toolbar"
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: console.log("Terve terve")
             }
         }
+
+        WebView {
+            id: webView
+
+            width: 1536
+            height: 2048
+//            active: true
+//            clip: true
+        }
+
     }
-  }
 }
+
+
+
+//Item {
+
+
+//        id: browserPage
+//        width: 1536
+//        height: 2048
+
+//        Rectangle {
+//            color: "blue"
+//            width: 100
+//            height: 100
+//        }
+
+//    }
 
