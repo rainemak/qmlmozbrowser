@@ -9,7 +9,7 @@ BrowserWindow::BrowserWindow(QWindow *parent)
     , m_context(0)
     , m_contextSet(false)
 {
-    qDebug() << "-------------------------- browser window";
+    qDebug() << "-------------------------- browser window: " << parent;
 
     resize(1536, 2048);;
     setSurfaceType(QWindow::OpenGLSurface);
@@ -57,9 +57,12 @@ void BrowserWindow::setChromeWindow(QWindow *chromeWindow)
 {
     if (chromeWindow != m_chromeWindow) {
         m_chromeWindow = chromeWindow;
+        qDebug() << "------------------------------------- mor moro: " << m_chromeWindow;
         if (m_chromeWindow) {
+//            m_chromeWindow->setParent(this);
             m_chromeWindow->setTransientParent(this);
             showFullScreen();
+            m_chromeWindow->showFullScreen();
         }
         emit chromeWindowChanged();
     }

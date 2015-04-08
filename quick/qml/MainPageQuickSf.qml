@@ -64,7 +64,7 @@ ApplicationWindow {
             }
         }
 
-        WebView {
+        Item {
             id: webView
 
             width: 1536
