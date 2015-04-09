@@ -144,12 +144,16 @@ void BrowserWindow::createGLContext()
 
     initializeOpenGLFunctions();
     QMetaObject::invokeMethod(this, "createChrome", Qt::QueuedConnection);
+    emit showChrome();
 }
 
 void BrowserWindow::createChrome()
 {
+    qDebug() << "foobar";
+#if 0
     ChromeWindow *chrome = new ChromeWindow(this);
     chrome->showFullScreen();
+#endif
 }
 
 void BrowserWindow::onViewInitialized()

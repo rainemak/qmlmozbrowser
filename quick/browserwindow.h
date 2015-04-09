@@ -30,6 +30,7 @@ signals:
     void completedChanged();
     void contentItemChanged();
     void chromeWindowChanged();
+    void showChrome();
 
 protected:
     virtual void touchEvent(QTouchEvent*);

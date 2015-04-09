@@ -31,6 +31,10 @@ int main(int argc, char **argv)
     BrowserWindow bwindow;
     bwindow.showFullScreen();
 
+    ChromeWindow *chrome = new ChromeWindow(&bwindow);
+    QObject::connect(&bwindow, SIGNAL(showChrome()), chrome, SLOT(showFullScreen()));
+//    chrome->showFullScreen();
+
     QTimer::singleShot(0, QMozContext::GetInstance(), SLOT(runEmbedding()));
     QObject::connect(&app, SIGNAL(lastWindowClosed()), QMozContext::GetInstance(), SLOT(stopEmbedding()));
 
