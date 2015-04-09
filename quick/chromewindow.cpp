@@ -14,7 +14,7 @@ ChromeWindow::ChromeWindow(QWindow *parent)
     qDebug() << "-------------------------- ChromeWindow: " << parent;
 
     resize(1536, 2048);
-    setTransientParent(parent);
+//    setTransientParent(parent);
     rootContext()->setContextProperty("BrowserWindow", parent);
     setSource(QUrl("qrc:/qml/MainPageQuickSf.qml"));
     installEventFilter(this);

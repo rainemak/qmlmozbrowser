@@ -37,6 +37,8 @@ BrowserWindow::BrowserWindow(QWindow *parent)
 
     connect(m_webPage, SIGNAL(requestGLContext()), this, SLOT(createGLContext()), Qt::DirectConnection);
     connect(m_webPage, SIGNAL(completedChanged()), this, SLOT(onViewInitialized()));
+
+    showFullScreen();
 }
 
 bool BrowserWindow::completed() const
@@ -56,19 +58,17 @@ QWindow *BrowserWindow::chromeWindow() const
 
 void BrowserWindow::setChromeWindow(QWindow *chromeWindow)
 {
-#if 0
     if (chromeWindow != m_chromeWindow) {
         m_chromeWindow = chromeWindow;
         qDebug() << "------------------------------------- mor moro: " << m_chromeWindow;
         if (m_chromeWindow) {
 //            m_chromeWindow->setParent(this);
             m_chromeWindow->setTransientParent(this);
-            showFullScreen();
-            m_chromeWindow->showFullScreen();
+            connect(this, SIGNAL(showChrome()), m_chromeWindow, SLOT(showFullScreen()));
+            //m_chromeWindow->showFullScreen();
         }
         emit chromeWindowChanged();
     }
-#endif
 }
 
 void BrowserWindow::touchEvent(QTouchEvent *e)
@@ -143,7 +143,7 @@ void BrowserWindow::createGLContext()
     m_context->makeCurrent(this);
 
     initializeOpenGLFunctions();
-    QMetaObject::invokeMethod(this, "createChrome", Qt::QueuedConnection);
+    //QMetaObject::invokeMethod(this, "createChrome", Qt::QueuedConnection);
     emit showChrome();
 }
 

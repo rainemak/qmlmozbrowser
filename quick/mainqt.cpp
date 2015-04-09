@@ -28,11 +28,11 @@ int main(int argc, char **argv)
     qmlRegisterUncreatableType<QOpenGLWebPage>("Test", 1, 0, "WebPage", "");
     qmlRegisterUncreatableType<QMozScrollDecorator>("Test", 1, 0, "ScrollD", "");
 
-    BrowserWindow bwindow;
-    bwindow.showFullScreen();
+//    BrowserWindow bwindow;
+//    bwindow.showFullScreen();
 
-    ChromeWindow *chrome = new ChromeWindow(&bwindow);
-    QObject::connect(&bwindow, SIGNAL(showChrome()), chrome, SLOT(showFullScreen()));
+    ChromeWindow *chrome = new ChromeWindow();
+//    QObject::connect(&bwindow, SIGNAL(showChrome()), chrome, SLOT(showFullScreen()));
 //    chrome->showFullScreen();
 
     QTimer::singleShot(0, QMozContext::GetInstance(), SLOT(runEmbedding()));

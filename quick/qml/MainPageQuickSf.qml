@@ -5,7 +5,7 @@ import Test 1.0
 ApplicationWindow {
     cover: null
 
-//    onWindowChanged: webView.chromeWindow = window
+    onWindowChanged: webView.chromeWindow = window
 
 
     initialPage: Page {
@@ -64,7 +64,7 @@ ApplicationWindow {
             }
         }
 
-        Item {
+        WebView {
             id: webView
 
             width: 1536
