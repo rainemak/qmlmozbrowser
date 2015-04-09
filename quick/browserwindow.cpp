@@ -1,4 +1,5 @@
 #include "browserwindow.h"
+#include "chromewindow.h"
 #include "qmozcontext.h"
 
 #include <QDebug>
@@ -19,6 +20,7 @@ BrowserWindow::BrowserWindow(QWindow *parent)
     setFormat(format);
 
     create();
+    QMozContext::GetInstance()->setPixelRatio(2.0);
 
     m_webPage = new QOpenGLWebPage(this);
     qDebug() << QCoreApplication::arguments();
@@ -33,7 +35,6 @@ BrowserWindow::BrowserWindow(QWindow *parent)
     setObjectName("BrowserWindow");
 
 
-    QMozContext::GetInstance()->setPixelRatio(2.0);
     connect(m_webPage, SIGNAL(requestGLContext()), this, SLOT(createGLContext()), Qt::DirectConnection);
     connect(m_webPage, SIGNAL(completedChanged()), this, SLOT(onViewInitialized()));
 }
@@ -55,6 +56,7 @@ QWindow *BrowserWindow::chromeWindow() const
 
 void BrowserWindow::setChromeWindow(QWindow *chromeWindow)
 {
+#if 0
     if (chromeWindow != m_chromeWindow) {
         m_chromeWindow = chromeWindow;
         qDebug() << "------------------------------------- mor moro: " << m_chromeWindow;
@@ -66,6 +68,7 @@ void BrowserWindow::setChromeWindow(QWindow *chromeWindow)
         }
         emit chromeWindowChanged();
     }
+#endif
 }
 
 void BrowserWindow::touchEvent(QTouchEvent *e)
@@ -140,10 +143,19 @@ void BrowserWindow::createGLContext()
     m_context->makeCurrent(this);
 
     initializeOpenGLFunctions();
+    QMetaObject::invokeMethod(this, "createChrome", Qt::QueuedConnection);
+}
+
+void BrowserWindow::createChrome()
+{
+    ChromeWindow *chrome = new ChromeWindow(this);
+    chrome->showFullScreen();
 }
 
 void BrowserWindow::onViewInitialized()
 {
+    QMozContext::GetInstance()->setPixelRatio(2.0);
+
     qDebug() << "-------------------------- * onViewInitialized";
     if (m_webPage) {
         emit contentItemChanged();

@@ -45,6 +45,7 @@ private Q_SLOTS:
     void onViewInitialized();
     void invalidated();
     void createGLContext();
+    void createChrome();
 
 private:
     QPointer<QOpenGLWebPage> m_webPage;

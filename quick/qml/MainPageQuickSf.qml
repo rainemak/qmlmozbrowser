@@ -5,7 +5,7 @@ import Test 1.0
 ApplicationWindow {
     cover: null
 
-    onWindowChanged: webView.chromeWindow = window
+//    onWindowChanged: webView.chromeWindow = window
 
 
     initialPage: Page {
@@ -13,38 +13,38 @@ ApplicationWindow {
 
         property bool popupActive
 
-        Component.onCompleted: console.log("-------------- ", webView.contentItem, "-- " , webView.contentItem.verticalScrollDecorator)
+//        Component.onCompleted: console.log("-------------- ", webView.contentItem, "-- " , webView.contentItem.verticalScrollDecorator)
 
-        Rectangle {
-            id: verticalScrollDecorator
+//        Rectangle {
+//            id: verticalScrollDecorator
 
-            width: 5
-            height: webView.contentItem ? webView.contentItem.verticalScrollDecorator.size : 0
-            y: webView.contentItem ? webView.contentItem.verticalScrollDecorator.position : 0
-            x: parent.width - width
+//            width: 5
+//            height: webView.contentItem ? webView.contentItem.verticalScrollDecorator.size : 0
+//            y: webView.contentItem ? webView.contentItem.verticalScrollDecorator.position : 0
+//            x: parent.width - width
 
-            color: "black"
-            smooth: true
-            radius: 2.5
-            visible: opacity > 0.0
-            opacity: webView.contentItem && webView.contentItem.verticalScrollDecorator.moving ? 1.0 : 0.0
-            Behavior on opacity { NumberAnimation { properties: "opacity"; duration: 400 } }
-        }
+//            color: "black"
+//            smooth: true
+//            radius: 2.5
+//            visible: opacity > 0.0
+//            opacity: webView.contentItem && webView.contentItem.verticalScrollDecorator.moving ? 1.0 : 0.0
+//            Behavior on opacity { NumberAnimation { properties: "opacity"; duration: 400 } }
+//        }
 
-        Rectangle {
-            id: horizontalScrollDecorator
+//        Rectangle {
+//            id: horizontalScrollDecorator
 
-            width: webView.contentItem ? webView.contentItem.horizontalScrollDecorator.size : 0
-            height: 5
-            x: webView.contentItem ? webView.contentItem.horizontalScrollDecorator.position : 0
-            y: parent.height - height - 100
-            color: "black"
-            smooth: true
-            radius: 2.5
-            visible: opacity > 0.0
-            opacity: webView.contentItem && webView.contentItem.horizontalScrollDecorator.moving ? 1.0 : 0.0
-            Behavior on opacity { NumberAnimation { properties: "opacity"; duration: 400 } }
-        }
+//            width: webView.contentItem ? webView.contentItem.horizontalScrollDecorator.size : 0
+//            height: 5
+//            x: webView.contentItem ? webView.contentItem.horizontalScrollDecorator.position : 0
+//            y: parent.height - height - 100
+//            color: "black"
+//            smooth: true
+//            radius: 2.5
+//            visible: opacity > 0.0
+//            opacity: webView.contentItem && webView.contentItem.horizontalScrollDecorator.moving ? 1.0 : 0.0
+//            Behavior on opacity { NumberAnimation { properties: "opacity"; duration: 400 } }
+//        }
 
         Rectangle {
             anchors.bottom: parent.bottom
